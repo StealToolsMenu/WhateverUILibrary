@@ -931,7 +931,7 @@ function WMacLib:Window(Settings)
 
 	local userInfoUIPadding = Instance.new("UIPadding")
 	userInfoUIPadding.Name = "UserInfoUIPadding"
-	userInfoUIPadding.PaddingLeft = UDim.new(0, -5)
+	userInfoUIPadding.PaddingLeft = UDim.new(0, -500)
 	userInfoUIPadding.PaddingRight = UDim.new(0, 0)
 	userInfoUIPadding.Parent = userInfo
 
