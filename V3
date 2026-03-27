@@ -821,7 +821,7 @@ function WMacLib:Window(Settings)
 	local informationGroupUIPadding = Instance.new("UIPadding")
 	informationGroupUIPadding.Name = "InformationGroupUIPadding"
 	informationGroupUIPadding.PaddingBottom = UDim.new(0, 17)
-	informationGroupUIPadding.PaddingLeft = UDim.new(0, 25)
+	informationGroupUIPadding.PaddingLeft = UDim.new(0, 10)
 	informationGroupUIPadding.Parent = informationGroup
 
 	local informationGroupUIListLayout = Instance.new("UIListLayout")
@@ -931,7 +931,7 @@ function WMacLib:Window(Settings)
 
 	local userInfoUIPadding = Instance.new("UIPadding")
 	userInfoUIPadding.Name = "UserInfoUIPadding"
-	userInfoUIPadding.PaddingLeft = UDim.new(0, -500)
+	userInfoUIPadding.PaddingLeft = UDim.new(0, 10)
 	userInfoUIPadding.PaddingRight = UDim.new(0, 0)
 	userInfoUIPadding.Parent = userInfo
 
