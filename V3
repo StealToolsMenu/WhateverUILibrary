@@ -842,7 +842,7 @@ function WMacLib:Window(Settings)
 	headshot.BackgroundTransparency = 1
 	headshot.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	headshot.BorderSizePixel = 0
-	headshot.Size = UDim2.fromOffset(32, 32)
+	headshot.Size = UDim2.fromOffset(52, 52)
 	headshot.Image = (isReady and headshotImage) or "rbxassetid://0"
 
 	local uICorner3 = Instance.new("UICorner")
@@ -877,7 +877,7 @@ function WMacLib:Window(Settings)
 	)
 	displayName.Text = LocalPlayer.DisplayName
 	setThemed(displayName, "TextColor3", "Text")
-	displayName.TextSize = 13
+	displayName.TextSize = 20
 	displayName.TextTransparency = 0.1
 	displayName.TextTruncate = Enum.TextTruncate.SplitWord
 	displayName.TextXAlignment = Enum.TextXAlignment.Left
