@@ -892,7 +892,7 @@ function WMacLib:Window(Settings)
 
 	local userAndDisplayFrameUIPadding = Instance.new("UIPadding")
 	userAndDisplayFrameUIPadding.Name = "UserAndDisplayFrameUIPadding"
-	userAndDisplayFrameUIPadding.PaddingLeft = UDim.new(0, 8)
+	userAndDisplayFrameUIPadding.PaddingLeft = UDim.new(0, 16)
 	userAndDisplayFrameUIPadding.PaddingTop = UDim.new(0, 3)
 	userAndDisplayFrameUIPadding.Parent = userAndDisplayFrame
 
