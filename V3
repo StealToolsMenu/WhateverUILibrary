@@ -368,7 +368,6 @@ local assets = {
 	sliderhead = "rbxassetid://18772834246",
 }
 
---// Functions
 local function GetGui()
 	local newGui = Instance.new("ScreenGui")
 	newGui.ScreenInsets = Enum.ScreenInsets.None
