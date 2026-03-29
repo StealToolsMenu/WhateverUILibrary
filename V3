@@ -3565,6 +3565,21 @@ function WMacLib:Window(Settings)
 						if not optionName then return end
 						return OptionObjs[optionName] ~= nil
 					end
+					function DropdownFunctions:Refresh(newOptions)
+						if not newOptions then return end
+						for _, optionData in pairs(OptionObjs) do
+							optionData.Button:Destroy()
+						end
+						OptionObjs = {}
+						Selected = {}
+						DropdownFunctions.Settings.Options = newOptions
+						for i, v in pairs(newOptions) do
+							addOption(i, v)
+						end
+						if dropped then
+							dropdown.Size = UDim2.new(1, 0, 0, CalculateDropdownSize())
+						end
+					end
 
 					if Flag then
 						WMacLib.Options[Flag] = DropdownFunctions
