@@ -3572,6 +3572,7 @@ function WMacLib:Window(Settings)
 						end
 						OptionObjs = {}
 						Selected = {}
+						dropdownName.Text = DropdownFunctions.Settings.Name .. "..."
 						DropdownFunctions.Settings.Options = newOptions
 						for i, v in pairs(newOptions) do
 							addOption(i, v)
