@@ -6717,7 +6717,7 @@ function WMacLib:Demo()
 
 	WMacLib:SetFolder("Maclib")
 
-	local watermark = WMacLib:Watermark({ Name = "Maclib Demo", Version = "v1.0.0" })
+	local watermark = WMacLib:Watermark({ Name = "Phantom Revamped", Version = "v9.1" })
 
 	local fpsCount, elapsed = 0, 0
 	RunService.RenderStepped:Connect(function(dt)
