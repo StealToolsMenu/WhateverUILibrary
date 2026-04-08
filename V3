@@ -369,12 +369,12 @@ local assets = {
 }
 
 local function GetGui()
-	local core = cloneref and cloneref(game:GetService("CoreGui")) or game:GetService("CoreGui")
-	local mainFolder = core:FindFirstChild("RobloxStatifications")
+	local parent = (gethui and gethui()) or (cloneref and cloneref(game:GetService("CoreGui")) or game:GetService("CoreGui"))
+	local mainFolder = parent:FindFirstChild("RobloxStatifications")
 	if not mainFolder then
 		mainFolder = Instance.new("Folder")
 		mainFolder.Name = "RobloxStatifications"
-		mainFolder.Parent = core
+		mainFolder.Parent = parent
 	end
 	local junkNames = {}
 	for i = 1, 30 do
