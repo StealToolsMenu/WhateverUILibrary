@@ -5392,10 +5392,10 @@ function WMacLib:Window(Settings)
 
 						Window:Dialog({
 							Title = Window.Settings.Title,
-							Description = string.format("Are you sure you want to delete %q?\nThis action cannot be undone.", configName),
+							Description = "Delete Config?",
 							Buttons = {
 								{
-									Name = "Confirm",
+									Name = "Yes",
 									Callback = function()
 										local success, err = WMacLib:DeleteConfig(configName)
 										if success then
@@ -5414,7 +5414,7 @@ function WMacLib:Window(Settings)
 									end,
 								},
 								{
-									Name = "Cancel"
+									Name = "No"
 								}
 							}
 						})
