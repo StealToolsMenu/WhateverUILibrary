@@ -5385,7 +5385,8 @@ function WMacLib:Window(Settings)
                 configSection:Button({
                     Name = "Delete Config",
                     Callback = function()
-                        local configName = configSelection.Value
+                        local configName = configSelection.Value:gsub("%.json$", "")
+
                         if not configName or configName == "" then
                             WindowFunctions:Notify({
                                 Title = "Interface",
@@ -5412,8 +5413,10 @@ function WMacLib:Window(Settings)
                                         end
 
                                         local autoloadPath = WMacLib.Folder .. "/settings/autoload.txt"
+
                                         if isfile(autoloadPath) then
                                             local currentAutoload = readfile(autoloadPath)
+
                                             if currentAutoload == configName then
                                                 delfile(autoloadPath)
                                                 autoloadLabel:UpdateName("Autoload config: None")
@@ -6034,15 +6037,6 @@ function WMacLib:Window(Settings)
 	end
 
 	local onUnloadCallback
-
-	function WindowFunctions:Unload()
-		if onUnloadCallback then
-			onUnloadCallback()
-		end
-		pcall(function() WMacLib:SaveConfig("autosave") end)
-		macLib:Destroy()
-		unloaded = true
-	end
 
 	function WindowFunctions.onUnloaded(callback)
 		onUnloadCallback = callback
