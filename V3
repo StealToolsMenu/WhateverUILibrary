@@ -5403,6 +5403,8 @@ function WMacLib:Window(Settings)
                                         local cleanName = configName:gsub("%.json$", "")
                                         local configPath = WMacLib.Folder .. "/configs/" .. cleanName .. ".json"
                                         
+                                        print("Deleting:", configPath)
+
                                         if isfile(configPath) then
                                             delfile(configPath)
 
@@ -5423,6 +5425,8 @@ function WMacLib:Window(Settings)
                                             configSelection:ClearOptions()
                                             configSelection:InsertOptions(WMacLib:RefreshConfigList())
                                         else
+                                            warn("File not found:", configPath)
+
                                             WindowFunctions:Notify({
                                                 Title = "Interface",
                                                 Description = string.format("Config %q does not exist.", cleanName)
