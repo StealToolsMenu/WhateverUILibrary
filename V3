@@ -5322,13 +5322,13 @@ function WMacLib:Window(Settings)
 				tabSwitcher:Destroy()
 			end
 
-			function TabFunctions:InsertConfigSection(Side)
-				local configSection = TabFunctions:Section({ Side = "Left" })
+			            function TabFunctions:InsertConfigSection(Side)
+                local configSection = TabFunctions:Section({ Side = "Left" })
 
-				if isStudio then
-					configSection:Label({Text = "Config system unavailable. (Environment isStudio)"})
-					return "Config system unavailable."
-				end
+                if isStudio then
+                    configSection:Label({Text = "Config system unavailable. (Environment isStudio)"})
+                    return "Config system unavailable."
+                end
 
                 local inputPath = nil
                 local selectedConfig = nil
@@ -5351,6 +5351,13 @@ function WMacLib:Window(Settings)
                         selectedConfig = Value
                     end,
                 })
+
+                local function refreshConfigs()
+                    configSelection:ClearOptions()
+                    configSelection:InsertOptions(WMacLib:RefreshConfigList())
+                end
+
+                task.defer(refreshConfigs)
 
                 configSection:Button({
                     Name = "Create Config",
@@ -5377,8 +5384,7 @@ function WMacLib:Window(Settings)
                             Description = string.format("Created config %q", inputPath),
                         })
 
-                        configSelection:ClearOptions()
-                        configSelection:InsertOptions(WMacLib:RefreshConfigList())
+                        refreshConfigs()
                     end,
                 })
 
@@ -5428,8 +5434,7 @@ function WMacLib:Window(Settings)
                                             Description = string.format("Deleted config %q", configName),
                                         })
 
-                                        configSelection:ClearOptions()
-                                        configSelection:InsertOptions(WMacLib:RefreshConfigList())
+                                        refreshConfigs()
                                     end,
                                 },
                                 {
@@ -5480,10 +5485,7 @@ function WMacLib:Window(Settings)
 
                 configSection:Button({
                     Name = "Refresh Config List",
-                    Callback = function()
-                        configSelection:ClearOptions()
-                        configSelection:InsertOptions(WMacLib:RefreshConfigList())
-                    end,
+                    Callback = refreshConfigs,
                 })
 
                 local autoloadLabel
@@ -5518,7 +5520,7 @@ function WMacLib:Window(Settings)
 
             return TabFunctions
         end
-
+        
 		function SectionFunctions:Divider()
 			tabIndex += 1
 			local dividerFrame = Instance.new("Frame")
