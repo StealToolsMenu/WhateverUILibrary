@@ -5320,185 +5320,175 @@ function WMacLib:Window(Settings)
 			end
             
             function TabFunctions:InsertConfigSection(Side)
-				local configSection = TabFunctions:Section({ Side = "Left" })
+	local configSection = TabFunctions:Section({ Side = "Left" })
 
-				if isStudio then
-					configSection:Label({Text = "Config system unavailable. (Environment isStudio)"})
-					return "Config system unavailable." 
-				end
+	if isStudio then
+		configSection:Label({Text = "Config system unavailable. (Environment isStudio)"})
+		return "Config system unavailable." 
+	end
 
-				local inputPath = nil
-				local selectedConfig = nil
+	local inputPath = nil
+	local selectedConfig = nil
 
-				configSection:Input({
-					Name = "Config Name",
-					Placeholder = "Name",
-					AcceptedCharacters = "All",
-					Callback = function(input)
-						inputPath = input
-					end,
+	configSection:Input({
+		Name = "Config Name",
+		Placeholder = "Name",
+		AcceptedCharacters = "All",
+		Callback = function(input)
+			inputPath = input
+		end,
+	})
+
+	local configSelection = configSection:Dropdown({
+		Name = "Select Config",
+		Multi = false,
+		Required = false,
+		Options = WMacLib:RefreshConfigList(),
+		Callback = function(Value)
+			selectedConfig = Value
+		end,
+	})
+
+	configSection:Button({
+		Name = "Create Config",
+		Callback = function()
+			if not inputPath or string.gsub(inputPath, " ", "") == "" then
+				WindowFunctions:Notify({
+					Title = "Interface",
+					Description = "Config name cannot be empty."
 				})
-
-				local configSelection = configSection:Dropdown({
-					Name = "Select Config",
-					Multi = false,
-					Required = false,
-					Options = WMacLib:RefreshConfigList(),
-					Callback = function(Value)
-						selectedConfig = Value
-					end,
-				})
-
-				configSection:Button({
-					Name = "Create Config",
-					Callback = function()
-						if not inputPath or string.gsub(inputPath, " ", "") == "" then
-							WindowFunctions:Notify({
-								Title = "Interface",
-								Description = "Config name cannot be empty."
-							})
-							return
-						end
-
-						local success, returned = WMacLib:SaveConfig(inputPath)
-						if not success then
-							WindowFunctions:Notify({
-								Title = "Interface",
-								Description = "Unable to save config, return error: " .. returned
-							})
-						end
-
-						WindowFunctions:Notify({
-							Title = "Interface",
-							Description = string.format("Created config %q", inputPath),
-						})
-
-						configSelection:ClearOptions()
-						configSelection:InsertOptions(WMacLib:RefreshConfigList())
-					end,
-				})
-
-				configSection:Button({
-					Name = "Delete Config",
-					Callback = function()
-						local configName = configSelection.Value
-						if not configName or configName == "" then
-							WindowFunctions:Notify({
-								Title = "Interface",
-								Description = "Please select a config to delete."
-							})
-							return
-						end
-
-						Window:Dialog({
-							Title = Window.Settings.Title,
-							Description = "Delete Config?",
-							Buttons = {
-								{
-									Name = "Yes",
-									Callback = function()
-										local success, err = WMacLib:DeleteConfig(configName)
-										if success then
-											WindowFunctions:Notify({
-												Title = "Interface",
-												Description = string.format("Deleted config %q", configName),
-											})
-											configSelection:ClearOptions()
-											configSelection:InsertOptions(WMacLib:RefreshConfigList())
-										else
-											WindowFunctions:Notify({
-												Title = "Interface",
-												Description = "Failed to delete config: " .. (err or "Unknown error"),
-											})
-										end
-									end,
-								},
-								{
-									Name = "No"
-								}
-							}
-						})
-					end,
-				})
-
-				configSection:Button({
-					Name = "Load Config",
-					Callback = function()
-						local success, returned = WMacLib:LoadConfig(configSelection.Value)
-						if not success then
-							WindowFunctions:Notify({
-								Title = "Interface",
-								Description = "Unable to load config, return error: " .. returned
-							})
-							return
-						end
-
-						WindowFunctions:Notify({
-							Title = "Interface",
-							Description = string.format("Loaded config %q", configSelection.Value),
-						})
-					end,
-				})
-
-				configSection:Button({
-					Name = "Overwrite Config",
-					Callback = function()
-						local success, returned = WMacLib:SaveConfig(configSelection.Value)
-						if not success then
-							WindowFunctions:Notify({
-								Title = "Interface",
-								Description = "Unable to overwrite config, return error: " .. returned
-							})
-							return
-						end
-
-						WindowFunctions:Notify({
-							Title = "Interface",
-							Description = string.format("Overwrote config %q", configSelection.Value),
-						})
-					end,
-				})
-
-				configSection:Button({
-					Name = "Refresh Config List",
-					Callback = function()
-						configSelection:ClearOptions()
-						configSelection:InsertOptions(WMacLib:RefreshConfigList())
-					end,
-				})
-
-				local autoloadLabel
-
-				configSection:Button({
-					Name = "Set as autoload",
-					Callback = function()
-						local name = configSelection.Value
-						writefile(WMacLib.Folder .. "/settings/autoload.txt", name)
-						autoloadLabel:UpdateName("Autoload config: " .. name)
-						WindowFunctions:Notify({
-							Title = "Interface",
-							Description = string.format("Set %q as autoload", name),
-						})
-					end,
-				})
-
-				autoloadLabel = configSection:Label({Text = "Autoload config: None"})
-
-				if isfile(WMacLib.Folder .. "/settings/autoload.txt") then
-					local name = readfile(WMacLib.Folder .. "/settings/autoload.txt")
-					autoloadLabel:UpdateName("Autoload config: " .. name)
-				end
+				return
 			end
 
-			tabs[tabSwitcher] = {
-				tabContent = elements1,
-				tabStroke = tabSwitcherUIStroke,
-				switcherImage = tabImage,
-				switcherName = tabSwitcherName,
-			}
+			local success, returned = WMacLib:SaveConfig(inputPath)
+			if not success then
+				WindowFunctions:Notify({
+					Title = "Interface",
+					Description = "Unable to save config, return error: " .. returned
+				})
+			end
 
-			return TabFunctions
-		end
+			WindowFunctions:Notify({
+				Title = "Interface",
+				Description = string.format("Created config %q", inputPath),
+			})
+
+			configSelection:ClearOptions()
+			configSelection:InsertOptions(WMacLib:RefreshConfigList())
+		end,
+	})
+
+	configSection:Button({
+		Name = "Delete Config",
+		Callback = function()
+			local configName = configSelection.Value
+			if not configName or configName == "" then
+				WindowFunctions:Notify({
+					Title = "Interface",
+					Description = "Please select a config to delete."
+				})
+				return
+			end
+
+			WindowFunctions:Dialog({
+				Title = WindowFunctions.Settings.Title,
+				Description = "Delete Config?",
+				Buttons = {
+					{
+						Name = "Yes",
+						Callback = function()
+							local success, err = WMacLib:DeleteConfig(configName)
+							if success then
+								WindowFunctions:Notify({
+									Title = "Interface",
+									Description = string.format("Deleted config %q", configName),
+								})
+								configSelection:ClearOptions()
+								configSelection:InsertOptions(WMacLib:RefreshConfigList())
+							else
+								WindowFunctions:Notify({
+									Title = "Interface",
+									Description = "Failed to delete config: " .. (err or "Unknown error"),
+								})
+							end
+						end,
+					},
+					{
+						Name = "No"
+					}
+				}
+			})
+		end,
+	})
+
+	configSection:Button({
+		Name = "Load Config",
+		Callback = function()
+			local success, returned = WMacLib:LoadConfig(configSelection.Value)
+			if not success then
+				WindowFunctions:Notify({
+					Title = "Interface",
+					Description = "Unable to load config, return error: " .. returned
+				})
+				return
+			end
+
+			WindowFunctions:Notify({
+				Title = "Interface",
+				Description = string.format("Loaded config %q", configSelection.Value),
+			})
+		end,
+	})
+
+	configSection:Button({
+		Name = "Overwrite Config",
+		Callback = function()
+			local success, returned = WMacLib:SaveConfig(configSelection.Value)
+			if not success then
+				WindowFunctions:Notify({
+					Title = "Interface",
+					Description = "Unable to overwrite config, return error: " .. returned
+				})
+				return
+			end
+
+			WindowFunctions:Notify({
+				Title = "Interface",
+				Description = string.format("Overwrote config %q", configSelection.Value),
+			})
+		end,
+	})
+
+	configSection:Button({
+		Name = "Refresh Config List",
+		Callback = function()
+			configSelection:ClearOptions()
+			configSelection:InsertOptions(WMacLib:RefreshConfigList())
+		end,
+	})
+
+	local autoloadLabel
+
+	configSection:Button({
+		Name = "Set as autoload",
+		Callback = function()
+			local name = configSelection.Value
+			writefile(WMacLib.Folder .. "/settings/autoload.txt", name)
+			autoloadLabel:UpdateName("Autoload config: " .. name)
+			WindowFunctions:Notify({
+				Title = "Interface",
+				Description = string.format("Set %q as autoload", name),
+			})
+		end,
+	})
+
+	autoloadLabel = configSection:Label({Text = "Autoload config: None"})
+
+	if isfile(WMacLib.Folder .. "/settings/autoload.txt") then
+		local name = readfile(WMacLib.Folder .. "/settings/autoload.txt")
+		autoloadLabel:UpdateName("Autoload config: " .. name)
+	end
+end
 
 		function SectionFunctions:Divider()
 			tabIndex += 1
