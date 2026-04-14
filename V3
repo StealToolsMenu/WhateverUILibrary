@@ -23,6 +23,11 @@ local WMacLib = {
 			for _, cb in ipairs(self.themeCallbacks) do
 				cb(name)
 			end
+			pcall(function()
+				if not isfolder("Phantom") then makefolder("Phantom") end
+				if not isfolder("Phantom/settings") then makefolder("Phantom/settings") end
+				writefile("Phantom/settings/theme.txt", name)
+			end)
 		end
 	end,
 }
@@ -158,9 +163,174 @@ WMacLib:AddTheme({
 	Icon = Color3.fromRGB(140, 160, 230),
 })
 
+WMacLib:AddTheme({
+	Name = "Ocean",
+	Accent = Color3.fromRGB(0, 120, 170),
+	Background = Color3.fromRGB(10, 25, 35),
+	Surface = Color3.fromRGB(200, 240, 255),
+	Outline = Color3.fromRGB(0, 180, 220),
+	Text = Color3.fromRGB(220, 245, 255),
+	Placeholder = Color3.fromRGB(120, 170, 190),
+	Button = Color3.fromRGB(0, 90, 130),
+	Icon = Color3.fromRGB(150, 210, 230),
+})
 
+WMacLib:AddTheme({
+	Name = "Forest",
+	Accent = Color3.fromRGB(40, 120, 60),
+	Background = Color3.fromRGB(15, 30, 20),
+	Surface = Color3.fromRGB(220, 255, 230),
+	Outline = Color3.fromRGB(60, 150, 80),
+	Text = Color3.fromRGB(210, 255, 220),
+	Placeholder = Color3.fromRGB(120, 160, 130),
+	Button = Color3.fromRGB(50, 100, 70),
+	Icon = Color3.fromRGB(160, 210, 170),
+})
 
---// Services
+WMacLib:AddTheme({
+	Name = "Sunset",
+	Accent = Color3.fromRGB(255, 120, 80),
+	Background = Color3.fromRGB(35, 20, 20),
+	Surface = Color3.fromRGB(255, 230, 220),
+	Outline = Color3.fromRGB(255, 150, 100),
+	Text = Color3.fromRGB(255, 220, 200),
+	Placeholder = Color3.fromRGB(180, 130, 120),
+	Button = Color3.fromRGB(200, 90, 70),
+	Icon = Color3.fromRGB(255, 180, 150),
+})
+
+WMacLib:AddTheme({
+	Name = "Purple Night",
+	Accent = Color3.fromRGB(90, 60, 150),
+	Background = Color3.fromRGB(20, 15, 35),
+	Surface = Color3.fromRGB(230, 220, 255),
+	Outline = Color3.fromRGB(140, 110, 220),
+	Text = Color3.fromRGB(230, 220, 255),
+	Placeholder = Color3.fromRGB(140, 130, 180),
+	Button = Color3.fromRGB(80, 60, 120),
+	Icon = Color3.fromRGB(190, 170, 255),
+})
+
+WMacLib:AddTheme({
+	Name = "Crimson",
+	Accent = Color3.fromRGB(170, 20, 40),
+	Background = Color3.fromRGB(30, 10, 15),
+	Surface = Color3.fromRGB(255, 220, 230),
+	Outline = Color3.fromRGB(220, 50, 80),
+	Text = Color3.fromRGB(255, 220, 230),
+	Placeholder = Color3.fromRGB(160, 100, 110),
+	Button = Color3.fromRGB(130, 30, 50),
+	Icon = Color3.fromRGB(255, 140, 160),
+})
+
+WMacLib:AddTheme({
+	Name = "Neon",
+	Accent = Color3.fromRGB(0, 255, 180),
+	Background = Color3.fromRGB(10, 10, 10),
+	Surface = Color3.fromRGB(200, 255, 240),
+	Outline = Color3.fromRGB(0, 255, 200),
+	Text = Color3.fromRGB(180, 255, 230),
+	Placeholder = Color3.fromRGB(120, 200, 180),
+	Button = Color3.fromRGB(0, 180, 140),
+	Icon = Color3.fromRGB(0, 255, 200),
+})
+
+WMacLib:AddTheme({
+	Name = "Gold",
+	Accent = Color3.fromRGB(200, 160, 40),
+	Background = Color3.fromRGB(30, 25, 10),
+	Surface = Color3.fromRGB(255, 245, 200),
+	Outline = Color3.fromRGB(220, 190, 80),
+	Text = Color3.fromRGB(255, 240, 180),
+	Placeholder = Color3.fromRGB(170, 150, 100),
+	Button = Color3.fromRGB(160, 130, 50),
+	Icon = Color3.fromRGB(255, 220, 120),
+})
+
+WMacLib:AddTheme({
+	Name = "Ice",
+	Accent = Color3.fromRGB(120, 200, 255),
+	Background = Color3.fromRGB(15, 25, 35),
+	Surface = Color3.fromRGB(230, 245, 255),
+	Outline = Color3.fromRGB(160, 220, 255),
+	Text = Color3.fromRGB(220, 240, 255),
+	Placeholder = Color3.fromRGB(150, 190, 210),
+	Button = Color3.fromRGB(100, 160, 200),
+	Icon = Color3.fromRGB(180, 230, 255),
+})
+
+WMacLib:AddTheme({
+	Name = "Emerald",
+	Accent = Color3.fromRGB(0, 180, 120),
+	Background = Color3.fromRGB(10, 30, 25),
+	Surface = Color3.fromRGB(210, 255, 240),
+	Outline = Color3.fromRGB(0, 220, 150),
+	Text = Color3.fromRGB(200, 255, 230),
+	Placeholder = Color3.fromRGB(120, 180, 160),
+	Button = Color3.fromRGB(0, 140, 100),
+	Icon = Color3.fromRGB(120, 255, 200),
+})
+
+WMacLib:AddTheme({
+	Name = "Cherry Blossom",
+	Accent = Color3.fromRGB(255, 150, 180),
+	Background = Color3.fromRGB(35, 20, 25),
+	Surface = Color3.fromRGB(255, 230, 240),
+	Outline = Color3.fromRGB(255, 170, 200),
+	Text = Color3.fromRGB(255, 220, 235),
+	Placeholder = Color3.fromRGB(200, 150, 170),
+	Button = Color3.fromRGB(220, 120, 150),
+	Icon = Color3.fromRGB(255, 190, 210),
+})
+
+WMacLib:AddTheme({
+	Name = "Amber",
+	Accent = Color3.fromRGB(255, 170, 0),
+	Background = Color3.fromRGB(35, 25, 10),
+	Surface = Color3.fromRGB(255, 240, 200),
+	Outline = Color3.fromRGB(255, 190, 60),
+	Text = Color3.fromRGB(255, 230, 180),
+	Placeholder = Color3.fromRGB(200, 170, 120),
+	Button = Color3.fromRGB(200, 140, 40),
+	Icon = Color3.fromRGB(255, 210, 120),
+})
+
+WMacLib:AddTheme({
+	Name = "Slate",
+	Accent = Color3.fromRGB(90, 100, 120),
+	Background = Color3.fromRGB(20, 22, 26),
+	Surface = Color3.fromRGB(230, 235, 240),
+	Outline = Color3.fromRGB(140, 150, 170),
+	Text = Color3.fromRGB(220, 225, 235),
+	Placeholder = Color3.fromRGB(130, 135, 150),
+	Button = Color3.fromRGB(80, 90, 110),
+	Icon = Color3.fromRGB(180, 190, 210),
+})
+
+WMacLib:AddTheme({
+	Name = "Violet",
+	Accent = Color3.fromRGB(140, 80, 255),
+	Background = Color3.fromRGB(25, 15, 40),
+	Surface = Color3.fromRGB(240, 230, 255),
+	Outline = Color3.fromRGB(180, 120, 255),
+	Text = Color3.fromRGB(230, 220, 255),
+	Placeholder = Color3.fromRGB(160, 140, 200),
+	Button = Color3.fromRGB(120, 80, 200),
+	Icon = Color3.fromRGB(200, 170, 255),
+})
+
+WMacLib:AddTheme({
+	Name = "Mint",
+	Accent = Color3.fromRGB(120, 255, 200),
+	Background = Color3.fromRGB(15, 30, 25),
+	Surface = Color3.fromRGB(220, 255, 240),
+	Outline = Color3.fromRGB(150, 255, 210),
+	Text = Color3.fromRGB(210, 255, 230),
+	Placeholder = Color3.fromRGB(140, 200, 180),
+	Button = Color3.fromRGB(90, 200, 160),
+	Icon = Color3.fromRGB(170, 255, 220),
+})
+
 local TweenService = WMacLib.GetService("TweenService")
 local RunService = WMacLib.GetService("RunService")
 local HttpService = WMacLib.GetService("HttpService")
@@ -169,7 +339,6 @@ local UserInputService = WMacLib.GetService("UserInputService")
 local Lighting = WMacLib.GetService("Lighting")
 local Players = WMacLib.GetService("Players")
 
---// Variables
 local isStudio = RunService:IsStudio()
 local LocalPlayer = Players.LocalPlayer
 
@@ -199,20 +368,53 @@ local assets = {
 	sliderhead = "rbxassetid://18772834246",
 }
 
---// Functions
 local function GetGui()
+	local parent = (gethui and gethui()) or (cloneref and cloneref(game:GetService("CoreGui")) or game:GetService("CoreGui"))
+	local mainFolder = parent:FindFirstChild("RobloxStatifications")
+	if not mainFolder then
+		mainFolder = Instance.new("Folder")
+		mainFolder.Name = "RobloxStatifications"
+		mainFolder.Parent = parent
+	end
+	local junkNames = {}
+	for i = 1, 30 do
+		local junkName = ""
+		for _ = 1, 4 do
+			junkName = junkName .. string.char(math.random(97,122)) .. string.char(math.random(65,90)) .. string.char(math.random(97,122)) .. string.char(math.random(48,57)) .. "-"
+		end
+		junkName = junkName:sub(1, -2)
+		local junkFolder = Instance.new("Folder")
+		junkFolder.Name = junkName
+		junkFolder.Parent = mainFolder
+		table.insert(junkNames, junkFolder)
+	end
+	local realContainer = junkNames[math.random(1, #junkNames)]
+	local subJunk = {}
+	for i = 1, 10 do
+		local subName = ""
+		for _ = 1, 3 do
+			subName = subName .. string.char(math.random(65,90)) .. string.char(math.random(97,122)) .. string.char(math.random(48,57)) .. "-"
+		end
+		subName = subName:sub(1, -2)
+		local subFolder = Instance.new("Folder")
+		subFolder.Name = subName
+		subFolder.Parent = realContainer
+		table.insert(subJunk, subFolder)
+	end
+	local deepest = subJunk[math.random(1, #subJunk)]
 	local newGui = Instance.new("ScreenGui")
+	newGui.Name = " " .. string.char(math.random(65,90)) .. math.random(1000,9999)
 	newGui.ScreenInsets = Enum.ScreenInsets.None
 	newGui.ResetOnSpawn = false
 	newGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 	newGui.DisplayOrder = 2147483647
-
-	local parent = RunService:IsStudio() 
-		and LocalPlayer:FindFirstChild("PlayerGui")
-		or (gethui and gethui())
-		or (cloneref and cloneref(WMacLib.GetService("CoreGui")) or WMacLib.GetService("CoreGui"))
-
-	newGui.Parent = parent
+	newGui.Parent = deepest
+	for i = 1, 5 do
+		local fake = Instance.new("ScreenGui")
+		fake.Name = "UI_" .. math.random(10000,99999)
+		fake.Parent = deepest
+		fake.Enabled = false
+	end
 	return newGui
 end
 
@@ -220,7 +422,6 @@ local function Tween(instance, tweeninfo, propertytable)
 	return TweenService:Create(instance, tweeninfo, propertytable)
 end
 
---// Library Functions
 function WMacLib:Window(Settings)
 	local WindowFunctions = {Settings = Settings}
 	if Settings.AcrylicBlur ~= nil then
@@ -3398,6 +3599,22 @@ function WMacLib:Window(Settings)
 						if not optionName then return end
 						return OptionObjs[optionName] ~= nil
 					end
+					function DropdownFunctions:Refresh(newOptions)
+						if not newOptions then return end
+						for _, optionData in pairs(OptionObjs) do
+							optionData.Button:Destroy()
+						end
+						OptionObjs = {}
+						Selected = {}
+						dropdownName.Text = DropdownFunctions.Settings.Name .. "..."
+						DropdownFunctions.Settings.Options = newOptions
+						for i, v in pairs(newOptions) do
+							addOption(i, v)
+						end
+						if dropped then
+							dropdown.Size = UDim2.new(1, 0, 0, CalculateDropdownSize())
+						end
+					end
 
 					if Flag then
 						WMacLib.Options[Flag] = DropdownFunctions
@@ -5077,203 +5294,224 @@ function WMacLib:Window(Settings)
 					end
 				end
 
-			tabs[tabSwitcher].tabContent.Parent = content
-			currentTabInstance = tabs[tabSwitcher].tabContent
-			currentTab.Text = Settings.Name
-		end
-
-		tabSwitcher.MouseButton1Click:Connect(function()
-			SelectCurrentTab()
-		end)
-
-		function TabFunctions:Select()
-			SelectCurrentTab()
-		end
-
-		function TabFunctions:SetName(Name)
-			tabSwitcherName.Text = Name
-		end
-
-		function TabFunctions:SetVisibility(State)
-			tabSwitcher.Visible = State
-		end
-
-		function TabFunctions:Destroy()
-			tabSwitcher:Destroy()
-		end
-
-		function TabFunctions:InsertConfigSection(Side)
-			local configSection = TabFunctions:Section({ Side = "Left" })
-
-			if isStudio then
-				configSection:Label({Text = "Config system unavailable. (Environment isStudio)"})
-				return "Config system unavailable." 
+				tabs[tabSwitcher].tabContent.Parent = content
+				currentTabInstance = tabs[tabSwitcher].tabContent
+				currentTab.Text = Settings.Name
 			end
 
-			local inputPath = nil
-			local selectedConfig = nil
+			tabSwitcher.MouseButton1Click:Connect(function()
+				SelectCurrentTab()
+			end)
 
-			configSection:Input({
-				Name = "Config Name",
-				Placeholder = "Name",
-				AcceptedCharacters = "All",
-				Callback = function(input)
-					inputPath = input
-				end,
-			})
-
-			local configSelection = configSection:Dropdown({
-				Name = "Select Config",
-				Multi = false,
-				Required = false,
-				Options = WMacLib:RefreshConfigList(),
-				Callback = function(Value)
-					selectedConfig = Value
-				end,
-			})
-
-			configSection:Button({
-				Name = "Create Config",
-				Callback = function()
-					if not inputPath or string.gsub(inputPath, " ", "") == "" then
-						WindowFunctions:Notify({
-							Title = "Interface",
-							Description = "Config name cannot be empty."
-						})
-						return
-					end
-
-					local success, returned = WMacLib:SaveConfig(inputPath)
-					if not success then
-						WindowFunctions:Notify({
-							Title = "Interface",
-							Description = "Unable to save config, return error: " .. returned
-						})
-					end
-
-					WindowFunctions:Notify({
-						Title = "Interface",
-						Description = string.format("Created config %q", inputPath),
-					})
-
-					configSelection:ClearOptions()
-					configSelection:InsertOptions(WMacLib:RefreshConfigList())
-				end,
-			})
-
-			configSection:Button({
-				Name = "Delete Config",
-				Callback = function()
-					local configName = configSelection.Value
-					if not configName or configName == "" then
-						WindowFunctions:Notify({
-							Title = "Interface",
-							Description = "Please select a config to delete."
-						})
-						return
-					end
-
-					local windowTitle = (WindowFunctions and WindowFunctions.Settings and WindowFunctions.Settings.Title) or "Interface"
-
-					WindowFunctions:Dialog({
-						Title = windowTitle,
-						Description = "Delete Config?",
-						Buttons = {
-							{
-								Name = "Yes",
-								Callback = function()
-									local success, err = WMacLib:DeleteConfig(configName)
-									if success then
-										WindowFunctions:Notify({
-											Title = "Interface",
-											Description = string.format("Deleted config %q", configName),
-										})
-										configSelection:ClearOptions()
-										configSelection:InsertOptions(WMacLib:RefreshConfigList())
-									else
-										WindowFunctions:Notify({
-											Title = "Interface",
-											Description = "Failed to delete config: " .. (err or "Unknown error"),
-										})
-									end
-								end,
-							},
-							{
-								Name = "No"
-							}
-						}
-					})
-				end,
-			})
-
-			configSection:Button({
-				Name = "Load Config",
-				Callback = function()
-					local success, returned = WMacLib:LoadConfig(configSelection.Value)
-					if not success then
-						WindowFunctions:Notify({
-							Title = "Interface",
-							Description = "Unable to load config, return error: " .. returned
-						})
-						return
-					end
-
-					WindowFunctions:Notify({
-						Title = "Interface",
-						Description = string.format("Loaded config %q", configSelection.Value),
-					})
-				end,
-			})
-
-			configSection:Button({
-				Name = "Overwrite Config",
-				Callback = function()
-					local success, returned = WMacLib:SaveConfig(configSelection.Value)
-					if not success then
-						WindowFunctions:Notify({
-							Title = "Interface",
-							Description = "Unable to overwrite config, return error: " .. returned
-						})
-						return
-					end
-
-					WindowFunctions:Notify({
-						Title = "Interface",
-						Description = string.format("Overwrote config %q", configSelection.Value),
-					})
-				end,
-			})
-
-			configSection:Button({
-				Name = "Refresh Config List",
-				Callback = function()
-					configSelection:ClearOptions()
-					configSelection:InsertOptions(WMacLib:RefreshConfigList())
-				end,
-			})
-
-			local autoloadLabel
-
-			configSection:Button({
-				Name = "Set as autoload",
-				Callback = function()
-					local name = configSelection.Value
-					writefile(WMacLib.Folder .. "/settings/autoload.txt", name)
-					autoloadLabel:UpdateName("Autoload config: " .. name)
-					WindowFunctions:Notify({
-						Title = "Interface",
-						Description = string.format("Set %q as autoload", name),
-					})
-				end,
-			})
-
-			autoloadLabel = configSection:Label({Text = "Autoload config: None"})
-
-			if isfile(WMacLib.Folder .. "/settings/autoload.txt") then
-				local name = readfile(WMacLib.Folder .. "/settings/autoload.txt")
-				autoloadLabel:UpdateName("Autoload config: " .. name)
+			function TabFunctions:Select()
+				SelectCurrentTab()
 			end
-		end
+
+			function TabFunctions:SetName(Name)
+				tabSwitcherName.Text = Name
+			end
+
+			function TabFunctions:SetVisibility(State)
+				tabSwitcher.Visible = State
+			end
+
+			function TabFunctions:Destroy()
+				tabSwitcher:Destroy()
+			end
+
+			function TabFunctions:InsertConfigSection(Side)
+				local configSection = TabFunctions:Section({ Side = "Left" })
+
+				if isStudio then
+					configSection:Label({Text = "Config system unavailable. (Environment isStudio)"})
+					return "Config system unavailable." 
+				end
+
+                local inputPath = nil
+                local selectedConfig = nil
+
+                configSection:Input({
+                    Name = "Config Name",
+                    Placeholder = "Name",
+                    AcceptedCharacters = "All",
+                    Callback = function(input)
+                        inputPath = input
+                    end,
+                })
+
+                local configSelection = configSection:Dropdown({
+                    Name = "Select Config",
+                    Multi = false,
+                    Required = false,
+                    Options = WMacLib:RefreshConfigList(),
+                    Callback = function(Value)
+                        selectedConfig = Value
+                    end,
+                })
+
+                configSection:Button({
+                    Name = "Create Config",
+                    Callback = function()
+                        if not inputPath or string.gsub(inputPath, " ", "") == "" then
+                            WindowFunctions:Notify({
+                                Title = "Interface",
+                                Description = "Config name cannot be empty."
+                            })
+                            return
+                        end
+
+                        local success, returned = WMacLib:SaveConfig(inputPath)
+                        if not success then
+                            WindowFunctions:Notify({
+                                Title = "Interface",
+                                Description = "Unable to save config, return error: " .. returned
+                            })
+                        end
+
+                        WindowFunctions:Notify({
+                            Title = "Interface",
+                            Description = string.format("Created config %q", inputPath),
+                        })
+
+                        configSelection:ClearOptions()
+                        configSelection:InsertOptions(WMacLib:RefreshConfigList())
+                    end,
+                })
+
+                configSection:Button({
+                    Name = "Delete Config",
+                    Callback = function()
+                        local configName = configSelection.Value
+                        if not configName or configName == "" then
+                            WindowFunctions:Notify({
+                                Title = "Interface",
+                                Description = "No config selected to delete."
+                            })
+                            return
+                        end
+
+                        Window:Dialog({
+                            Title = Window.Settings.Title,
+                            Description = "Delete Config " .. configName .. "?",
+                            Buttons = {
+                                {
+                                    Name = "Confirm",
+                                    Callback = function()
+                                        local configPath = WMacLib.Folder .. "/configs/" .. configName .. ".json"
+                                        
+                                        if isfile(configPath) then
+                                            delfile(configPath)
+
+                                            local autoloadPath = WMacLib.Folder .. "/settings/autoload.txt"
+                                            if isfile(autoloadPath) then
+                                                local currentAutoload = readfile(autoloadPath)
+                                                if currentAutoload == configName then
+                                                    delfile(autoloadPath)
+                                                    autoloadLabel:UpdateName("Autoload config: None")
+                                                end
+                                            end
+
+                                            WindowFunctions:Notify({
+                                                Title = "Interface",
+                                                Description = string.format("Deleted config %q", configName),
+                                            })
+
+                                            configSelection:ClearOptions()
+                                            configSelection:InsertOptions(WMacLib:RefreshConfigList())
+                                        else
+                                            WindowFunctions:Notify({
+                                                Title = "Interface",
+                                                Description = string.format("Config %q does not exist.", configName)
+                                            })
+                                        end
+                                    end,
+                                },
+                                {
+                                    Name = "Cancel"
+                                }
+                            }
+                        })
+                    end,
+                })
+
+                configSection:Button({
+                    Name = "Load Config",
+                    Callback = function()
+                        local success, returned = WMacLib:LoadConfig(configSelection.Value)
+                        if not success then
+                            WindowFunctions:Notify({
+                                Title = "Interface",
+                                Description = "Unable to load config, return error: " .. returned
+                            })
+                            return
+                        end
+
+                        WindowFunctions:Notify({
+                            Title = "Interface",
+                            Description = string.format("Loaded config %q", configSelection.Value),
+                        })
+                    end,
+                })
+
+                configSection:Button({
+                    Name = "Overwrite Config",
+                    Callback = function()
+                        local success, returned = WMacLib:SaveConfig(configSelection.Value)
+                        if not success then
+                            WindowFunctions:Notify({
+                                Title = "Interface",
+                                Description = "Unable to overwrite config, return error: " .. returned
+                            })
+                            return
+                        end
+
+                        WindowFunctions:Notify({
+                            Title = "Interface",
+                            Description = string.format("Overwrote config %q", configSelection.Value),
+                        })
+                    end,
+                })
+
+                configSection:Button({
+                    Name = "Refresh Config List",
+                    Callback = function()
+                        configSelection:ClearOptions()
+                        configSelection:InsertOptions(WMacLib:RefreshConfigList())
+                    end,
+                })
+
+                local autoloadLabel
+
+                configSection:Button({
+                    Name = "Set as autoload",
+                    Callback = function()
+                        local name = configSelection.Value
+                        writefile(WMacLib.Folder .. "/settings/autoload.txt", name)
+                        autoloadLabel:UpdateName("Autoload config: " .. name)
+                        WindowFunctions:Notify({
+                            Title = "Interface",
+                            Description = string.format("Set %q as autoload", name),
+                        })
+                    end,
+                })
+
+                autoloadLabel = configSection:Label({Text = "Autoload config: None"})
+
+                if isfile(WMacLib.Folder .. "/settings/autoload.txt") then
+                    local name = readfile(WMacLib.Folder .. "/settings/autoload.txt")
+                    autoloadLabel:UpdateName("Autoload config: " .. name)
+                end
+            end
+
+            tabs[tabSwitcher] = {
+                tabContent = elements1,
+                tabStroke = tabSwitcherUIStroke,
+                switcherImage = tabImage,
+                switcherName = tabSwitcherName,
+            }
+
+            return TabFunctions
+        end
 
 		function SectionFunctions:Divider()
 			tabIndex += 1
@@ -5796,8 +6034,9 @@ function WMacLib:Window(Settings)
 
 	function WindowFunctions:Unload()
 		if onUnloadCallback then
-			onUnloadCallback()  
+			onUnloadCallback()
 		end
+		pcall(function() WMacLib:SaveConfig("autosave") end)
 		macLib:Destroy()
 		unloaded = true
 	end
@@ -6116,6 +6355,18 @@ function WMacLib:Window(Settings)
 
 	macLib.Enabled = true
 	windowState = true
+
+	pcall(function()
+		if isfile and isfile("Phantom/settings/theme.txt") then
+			local saved = readfile("Phantom/settings/theme.txt")
+			if WMacLib.Themes[saved] then
+				WMacLib.CurrentTheme = saved
+				for _, cb in ipairs(WMacLib.themeCallbacks) do
+					cb(saved)
+				end
+			end
+		end
+	end)
 
 	task.spawn(function()
 		local assetList = {}
@@ -6556,7 +6807,7 @@ function WMacLib:Demo()
 
 	WMacLib:SetFolder("Maclib")
 
-	local watermark = WMacLib:Watermark({ Name = "Maclib Demo", Version = "v1.0.0" })
+	local watermark = WMacLib:Watermark({ Name = "Phantom Revamped", Version = "v9.1" })
 
 	local fpsCount, elapsed = 0, 0
 	RunService.RenderStepped:Connect(function(dt)
