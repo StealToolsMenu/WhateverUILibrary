@@ -5327,7 +5327,7 @@ function WMacLib:Window(Settings)
 
 				if isStudio then
 					configSection:Label({Text = "Config system unavailable. (Environment isStudio)"})
-					return "Config system unavailable." 
+					return "Config system unavailable."
 				end
 
                 local inputPath = nil
@@ -5369,6 +5369,7 @@ function WMacLib:Window(Settings)
                                 Title = "Interface",
                                 Description = "Unable to save config, return error: " .. returned
                             })
+                            return
                         end
 
                         WindowFunctions:Notify({
@@ -5384,7 +5385,8 @@ function WMacLib:Window(Settings)
                 configSection:Button({
                     Name = "Delete Config",
                     Callback = function()
-                        local configName = configSelection.Value
+                        local configName = configSelection.Value:gsub("%.json$", "")
+
                         if not configName or configName == "" then
                             WindowFunctions:Notify({
                                 Title = "Interface",
@@ -5400,38 +5402,34 @@ function WMacLib:Window(Settings)
                                 {
                                     Name = "Confirm",
                                     Callback = function()
-                                        local cleanName = configName:gsub("%.json$", "")
-                                        local configPath = WMacLib.Folder .. "/configs/" .. cleanName .. ".json"
-                                        
-                                        print("Deleting:", configPath)
+                                        local success, returned = WMacLib:DeleteConfig(configName)
 
-                                        if isfile(configPath) then
-                                            delfile(configPath)
-
-                                            local autoloadPath = WMacLib.Folder .. "/settings/autoload.txt"
-                                            if isfile(autoloadPath) then
-                                                local currentAutoload = readfile(autoloadPath):gsub("%.json$", "")
-                                                if currentAutoload == cleanName then
-                                                    delfile(autoloadPath)
-                                                    autoloadLabel:UpdateName("Autoload config: None")
-                                                end
-                                            end
-
+                                        if not success then
                                             WindowFunctions:Notify({
                                                 Title = "Interface",
-                                                Description = string.format("Deleted config %q", cleanName),
+                                                Description = "Unable to delete config, return error: " .. returned
                                             })
-
-                                            configSelection:ClearOptions()
-                                            configSelection:InsertOptions(WMacLib:RefreshConfigList())
-                                        else
-                                            warn("File not found:", configPath)
-
-                                            WindowFunctions:Notify({
-                                                Title = "Interface",
-                                                Description = string.format("Config %q does not exist.", cleanName)
-                                            })
+                                            return
                                         end
+
+                                        local autoloadPath = WMacLib.Folder .. "/settings/autoload.txt"
+
+                                        if isfile(autoloadPath) then
+                                            local currentAutoload = readfile(autoloadPath)
+
+                                            if currentAutoload == configName then
+                                                delfile(autoloadPath)
+                                                autoloadLabel:UpdateName("Autoload config: None")
+                                            end
+                                        end
+
+                                        WindowFunctions:Notify({
+                                            Title = "Interface",
+                                            Description = string.format("Deleted config %q", configName),
+                                        })
+
+                                        configSelection:ClearOptions()
+                                        configSelection:InsertOptions(WMacLib:RefreshConfigList())
                                     end,
                                 },
                                 {
@@ -5991,8 +5989,11 @@ function WMacLib:Window(Settings)
 			button.MouseButton1Click:Connect(function()
 				if dialogCanvas.GroupTransparency ~= 0 then return end
 				if v.Callback then
-					v.Callback()
-				end
+                local ok, err = pcall(v.Callback)
+                if not ok then
+                warn("Dialog callback error:", err)
+                 end
+            end
 
 				dialogOut()
 			end)
@@ -6039,15 +6040,6 @@ function WMacLib:Window(Settings)
 	end
 
 	local onUnloadCallback
-
-	function WindowFunctions:Unload()
-		if onUnloadCallback then
-			onUnloadCallback()
-		end
-		pcall(function() WMacLib:SaveConfig("autosave") end)
-		macLib:Destroy()
-		unloaded = true
-	end
 
 	function WindowFunctions.onUnloaded(callback)
 		onUnloadCallback = callback
@@ -6331,37 +6323,51 @@ function WMacLib:Window(Settings)
 		return true
 	end
 
-	function WMacLib:RefreshConfigList()
-		if isStudio or not (isfolder and listfiles) then return "Config system unavailable." end
+    function WMacLib:RefreshConfigList()
+        if isStudio or not (isfolder and listfiles) then return "Config system unavailable." end
 
-		local list = (isfolder(WMacLib.Folder) and isfolder(WMacLib.Folder .. "/settings")) and listfiles(WMacLib.Folder .. "/settings") or {}
+        local list = (isfolder(WMacLib.Folder) and isfolder(WMacLib.Folder .. "/settings")) and listfiles(WMacLib.Folder .. "/settings") or {}
 
-		local out = {}
-		for i = 1, #list do
-			local file = list[i]
-			if file:sub(-5) == ".json" then
-				local pos = file:find(".json", 1, true)
-				local start = pos
+        local out = {}
+        for i = 1, #list do
+            local file = list[i]
+            if file:sub(-5) == ".json" then
+                local pos = file:find(".json", 1, true)
+                local start = pos
 
-				local char = file:sub(pos, pos)
-				while char ~= "/" and char ~= "\\" and char ~= "" do
-					pos = pos - 1
-					char = file:sub(pos, pos)
-				end
+                local char = file:sub(pos, pos)
+                while char ~= "/" and char ~= "\\" and char ~= "" do
+                    pos = pos - 1
+                    char = file:sub(pos, pos)
+                end
 
-				if char == "/" or char == "\\" then
-					local name = file:sub(pos + 1, start - 1)
-					if name ~= "options" then
-						table.insert(out, name)
-					end
-				end
-			end
-		end
+                if char == "/" or char == "\\" then
+                    local name = file:sub(pos + 1, start - 1)
+                    if name ~= "options" then
+                        table.insert(out, name)
+                    end
+                end
+            end
+        end
 
-		return out
-	end
+        return out
+    end
 
-	macLib.Enabled = true
+    function WMacLib:DeleteConfig(Path)
+        if isStudio or not delfile then return "Config system unavailable." end
+
+        if (not Path) then
+            return false, "Please select a config file."
+        end
+
+        local file = WMacLib.Folder .. "/settings/" .. Path .. ".json"
+        if not isfile(file) then return false, "Invalid file" end
+
+        delfile(file)
+        return true
+    end
+
+    macLib.Enabled = true
 	windowState = true
 
 	pcall(function()
