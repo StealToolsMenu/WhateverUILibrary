@@ -6332,7 +6332,12 @@ function WMacLib:Window(Settings)
 	end
 
     function WMacLib:RefreshConfigList()
-        if isStudio or not (isfolder and listfiles) then return "Config system unavailable." end
+        if isStudio or not (isfolder and listfiles) then return {} end
+
+        pcall(function()
+            if not isfolder(WMacLib.Folder) then makefolder(WMacLib.Folder) end
+            if not isfolder(WMacLib.Folder .. "/settings") then makefolder(WMacLib.Folder .. "/settings") end
+        end)
 
         local list = (isfolder(WMacLib.Folder) and isfolder(WMacLib.Folder .. "/settings")) and listfiles(WMacLib.Folder .. "/settings") or {}
 
