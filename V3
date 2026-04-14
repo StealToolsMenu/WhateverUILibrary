@@ -2104,9 +2104,9 @@ function WMacLib:Window(Settings)
 
 					local function Callback()
 						if locked then return end
-						if ButtonFunctions.Settings and ButtonFunctions.Settings.Callback then
+						if Settings.Callback then
 							task.spawn(function()
-								ButtonFunctions.Settings.Callback()
+								Settings.Callback()
 							end)
 						end
 					end
