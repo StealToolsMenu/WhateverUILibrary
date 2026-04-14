@@ -2104,9 +2104,9 @@ function WMacLib:Window(Settings)
 
 					local function Callback()
 						if locked then return end
-						if Settings.Callback then
+						if ButtonFunctions.Settings and ButtonFunctions.Settings.Callback then
 							task.spawn(function()
-								Settings.Callback()
+								ButtonFunctions.Settings.Callback()
 							end)
 						end
 					end
@@ -5393,8 +5393,8 @@ function WMacLib:Window(Settings)
                             return
                         end
 
-                        Window:Dialog({
-                            Title = Window.Settings.Title,
+                        WindowFunctions:Dialog({
+                            Title = WindowFunctions.Settings.Title,
                             Description = "Delete Config " .. configName .. "?",
                             Buttons = {
                                 {
