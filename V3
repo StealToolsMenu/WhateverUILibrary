@@ -5321,7 +5321,6 @@ function WMacLib:Window(Settings)
 
 			function TabFunctions:InsertConfigSection(Side)
     local configSection = TabFunctions:Section({ Side = "Left" })
-    
     if isStudio then
         configSection:Label({Text = "Config system unavailable. (Environment isStudio)"})
         return "Config system unavailable."
@@ -5391,28 +5390,34 @@ function WMacLib:Window(Settings)
                 return
             end
 
-            WindowFunctions:Notify({
-                Title = "Delete Confirmation",
+            Window:Dialog({
+                Title = Window.Settings.Title,
                 Description = string.format("Are you sure you want to delete %q?\nThis action cannot be undone.", configName),
-                Duration = 6,
+                Buttons = {
+                    {
+                        Name = "Confirm",
+                        Callback = function()
+                            local success, err = WMacLib:DeleteConfig(configName)
+                            if success then
+                                WindowFunctions:Notify({
+                                    Title = "Interface",
+                                    Description = string.format("Deleted config %q", configName),
+                                })
+                                configSelection:ClearOptions()
+                                configSelection:InsertOptions(WMacLib:RefreshConfigList())
+                            else
+                                WindowFunctions:Notify({
+                                    Title = "Interface",
+                                    Description = "Failed to delete config: " .. (err or "Unknown error"),
+                                })
+                            end
+                        end,
+                    },
+                    {
+                        Name = "Cancel"
+                    }
+                }
             })
-
-            local success, err = WMacLib:DeleteConfig(configName)
-
-            if success then
-                WindowFunctions:Notify({
-                    Title = "Interface",
-                    Description = string.format("Deleted config %q", configName),
-                })
-
-                configSelection:ClearOptions()
-                configSelection:InsertOptions(WMacLib:RefreshConfigList())
-            else
-                WindowFunctions:Notify({
-                    Title = "Interface",
-                    Description = "Failed to delete config: " .. (err or "Unknown error"),
-                })
-            end
         end,
     })
 
