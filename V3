@@ -2035,7 +2035,8 @@ function WMacLib:Window(Settings)
 				sectionUIPadding.Parent = section
 
 				function SectionFunctions:Button(Settings, Flag)
-					local ButtonFunctions = {Settings = Settings}
+					local ButtonFunctions = {}
+                    ButtonFunctions.Settings = Settings
 					local button = Instance.new("Frame")
 					local locked = false
 					button.Name = "Button"
@@ -2103,8 +2104,10 @@ function WMacLib:Window(Settings)
 
 					local function Callback()
 						if locked then return end
-						if ButtonFunctions.Settings.Callback then
-							ButtonFunctions.Settings.Callback()
+						if Settings.Callback then
+							task.spawn(function()
+								Settings.Callback()
+							end)
 						end
 					end
 
@@ -5390,8 +5393,8 @@ function WMacLib:Window(Settings)
                             return
                         end
 
-                        WindowFunctions:Dialog({
-                            Title = WindowFunctions.Settings.Title,
+                        Window:Dialog({
+                            Title = Window.Settings.Title,
                             Description = "Delete Config " .. configName .. "?",
                             Buttons = {
                                 {
@@ -5407,7 +5410,7 @@ function WMacLib:Window(Settings)
                                                 local currentAutoload = readfile(autoloadPath)
                                                 if currentAutoload == configName then
                                                     delfile(autoloadPath)
-                                                    if autoloadLabel then autoloadLabel:UpdateName("Autoload config: None") end
+                                                    autoloadLabel:UpdateName("Autoload config: None")
                                                 end
                                             end
 
