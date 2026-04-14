@@ -5327,7 +5327,7 @@ function WMacLib:Window(Settings)
 
 				if isStudio then
 					configSection:Label({Text = "Config system unavailable. (Environment isStudio)"})
-					return "Config system unavailable." 
+					return "Config system unavailable."
 				end
 
                 local inputPath = nil
@@ -5369,6 +5369,7 @@ function WMacLib:Window(Settings)
                                 Title = "Interface",
                                 Description = "Unable to save config, return error: " .. returned
                             })
+                            return
                         end
 
                         WindowFunctions:Notify({
@@ -5393,47 +5394,30 @@ function WMacLib:Window(Settings)
                             return
                         end
 
-                        WindowFunctions:Dialog({
-                            Title = WindowFunctions.Settings.Title,
-                            Description = "Delete Config " .. configName .. "?",
-                            Buttons = {
-                                {
-                                    Name = "Confirm",
-                                    Callback = function()
-                                        local configPath = WMacLib.Folder .. "/configs/" .. configName .. ".json"
-                                        
-                                        if isfile(configPath) then
-                                            delfile(configPath)
+                        local success, returned = WMacLib:DeleteConfig(configName)
+                        if not success then
+                            WindowFunctions:Notify({
+                                Title = "Interface",
+                                Description = "Unable to delete config, return error: " .. returned
+                            })
+                            return
+                        end
 
-                                            local autoloadPath = WMacLib.Folder .. "/settings/autoload.txt"
-                                            if isfile(autoloadPath) then
-                                                local currentAutoload = readfile(autoloadPath)
-                                                if currentAutoload == configName then
-                                                    delfile(autoloadPath)
-                                                    autoloadLabel:UpdateName("Autoload config: None")
-                                                end
-                                            end
+                        if isfile(WMacLib.Folder .. "/settings/autoload.txt") then
+                            local currentAutoload = readfile(WMacLib.Folder .. "/settings/autoload.txt")
+                            if currentAutoload == configName then
+                                delfile(WMacLib.Folder .. "/settings/autoload.txt")
+                                autoloadLabel:UpdateName("Autoload config: None")
+                            end
+                        end
 
-                                            WindowFunctions:Notify({
-                                                Title = "Interface",
-                                                Description = string.format("Deleted config %q", configName),
-                                            })
-
-                                            configSelection:ClearOptions()
-                                            configSelection:InsertOptions(WMacLib:RefreshConfigList())
-                                        else
-                                            WindowFunctions:Notify({
-                                                Title = "Interface",
-                                                Description = string.format("Config %q does not exist.", configName)
-                                            })
-                                        end
-                                    end,
-                                },
-                                {
-                                    Name = "Cancel"
-                                }
-                            }
+                        WindowFunctions:Notify({
+                            Title = "Interface",
+                            Description = string.format("Deleted config %q", configName),
                         })
+
+                        configSelection:ClearOptions()
+                        configSelection:InsertOptions(WMacLib:RefreshConfigList())
                     end,
                 })
 
