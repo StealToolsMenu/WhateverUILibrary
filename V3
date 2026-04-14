@@ -5400,15 +5400,16 @@ function WMacLib:Window(Settings)
                                 {
                                     Name = "Confirm",
                                     Callback = function()
-                                        local configPath = WMacLib.Folder .. "/configs/" .. configName .. ".json"
+                                        local cleanName = configName:gsub("%.json$", "")
+                                        local configPath = WMacLib.Folder .. "/configs/" .. cleanName .. ".json"
                                         
                                         if isfile(configPath) then
                                             delfile(configPath)
 
                                             local autoloadPath = WMacLib.Folder .. "/settings/autoload.txt"
                                             if isfile(autoloadPath) then
-                                                local currentAutoload = readfile(autoloadPath)
-                                                if currentAutoload == configName then
+                                                local currentAutoload = readfile(autoloadPath):gsub("%.json$", "")
+                                                if currentAutoload == cleanName then
                                                     delfile(autoloadPath)
                                                     autoloadLabel:UpdateName("Autoload config: None")
                                                 end
@@ -5416,7 +5417,7 @@ function WMacLib:Window(Settings)
 
                                             WindowFunctions:Notify({
                                                 Title = "Interface",
-                                                Description = string.format("Deleted config %q", configName),
+                                                Description = string.format("Deleted config %q", cleanName),
                                             })
 
                                             configSelection:ClearOptions()
@@ -5424,7 +5425,7 @@ function WMacLib:Window(Settings)
                                         else
                                             WindowFunctions:Notify({
                                                 Title = "Interface",
-                                                Description = string.format("Config %q does not exist.", configName)
+                                                Description = string.format("Config %q does not exist.", cleanName)
                                             })
                                         end
                                     end,
