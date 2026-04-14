@@ -5390,8 +5390,10 @@ function WMacLib:Window(Settings)
 				return
 			end
 
+			local windowTitle = (WindowFunctions and WindowFunctions.Settings and WindowFunctions.Settings.Title) or "Interface"
+
 			WindowFunctions:Dialog({
-				Title = WindowFunctions.Settings.Title,
+				Title = windowTitle,
 				Description = "Delete Config?",
 				Buttons = {
 					{
