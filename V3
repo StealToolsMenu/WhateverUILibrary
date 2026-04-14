@@ -5390,8 +5390,8 @@ function WMacLib:Window(Settings)
                             return
                         end
 
-                        Window:Dialog({
-                            Title = Window.Settings.Title,
+                        WindowFunctions:Dialog({
+                            Title = WindowFunctions.Settings.Title,
                             Description = "Delete Config " .. configName .. "?",
                             Buttons = {
                                 {
@@ -5407,7 +5407,7 @@ function WMacLib:Window(Settings)
                                                 local currentAutoload = readfile(autoloadPath)
                                                 if currentAutoload == configName then
                                                     delfile(autoloadPath)
-                                                    autoloadLabel:UpdateName("Autoload config: None")
+                                                    if autoloadLabel then autoloadLabel:UpdateName("Autoload config: None") end
                                                 end
                                             end
 
