@@ -6554,7 +6554,7 @@ function WMacLib:Demo()
 	})
 
 	sections.MainSection1:Button({
-		Name = "Button",
+		Name = "Dialog",
 		Callback = function()
 			Window:Dialog({
 				Title = Window.Settings.Title,
