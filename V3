@@ -6041,11 +6041,19 @@ function WMacLib:Window(Settings)
 
 	local onUnloadCallback
 
-	function WindowFunctions.onUnloaded(callback)
-		onUnloadCallback = callback
-	end
+    function WindowFunctions.onUnloaded(callback)
+        onUnloadCallback = callback
+    end
 
-	local MenuKeybind = Settings.Keybind or Enum.KeyCode.RightControl
+    function WindowFunctions:Unload()
+        unloaded = true
+        if onUnloadCallback then
+            onUnloadCallback()
+        end
+        macLib:Destroy()
+    end
+
+    local MenuKeybind = Settings.Keybind or Enum.KeyCode.RightControl
 
 	local function ToggleMenu()
 		local state = not WindowFunctions:GetState()
