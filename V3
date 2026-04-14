@@ -6558,7 +6558,7 @@ function WMacLib:Demo()
 		Callback = function()
 			Window:Dialog({
 				Title = Window.Settings.Title,
-				Description = "Maclib Demo",
+				Description = "zx",
 				Buttons = {
 					{
 						Name = "Confirm",
