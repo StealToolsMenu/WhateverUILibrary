@@ -1,4 +1,4 @@
-local WMacLib = { 
+dont make it pop down make it show up as a popup lol and make the rainbow mode speed much much slower: local WMacLib = { 
 	Options = {}, 
 	Folder = "Maclib", 
 	Themes = {},
@@ -3641,7 +3641,7 @@ function WMacLib:Window(Settings)
                     colorpicker.BorderColor3 = Color3.fromRGB(0, 0, 0)
                     colorpicker.BorderSizePixel = 0
                     colorpicker.Size = UDim2.new(1, 0, 0, 38)
-                    colorpicker.ClipsDescendants = true
+                    colorpicker.ClipsDescendants = false
                     colorpicker.Parent = section
 
                     local colorpickerName = Instance.new("TextLabel")
@@ -3723,9 +3723,10 @@ function WMacLib:Window(Settings)
                     local CPWrap = Instance.new("Frame")
                     CPWrap.Name = "DropdownPicker"
                     CPWrap.Size = UDim2.new(0, 175, 0, 212)
-                    CPWrap.Position = UDim2.new(0.5, -87, 0, 46)
+                    CPWrap.AnchorPoint = Vector2.new(0.5, 1)
+                    CPWrap.Position = UDim2.new(0.5, 0, 0, -5)
                     CPWrap.BorderSizePixel = 0
-                    CPWrap.ZIndex = 3
+                    CPWrap.ZIndex = 50
                     CPWrap.Visible = false
                     CPWrap.Parent = colorpicker
 
@@ -4057,7 +4058,7 @@ function WMacLib:Window(Settings)
                         if on then
                             if rainbowConn then rainbowConn:Disconnect() end
                             rainbowConn = RunService.Heartbeat:Connect(function()
-                                cpH = (cpH + 0.003) % 1
+                                cpH = (cpH + 0.0001) % 1
                                 local realColor = Color3.fromHSV(cpH, cpS, cpV)
                                 colorC.BackgroundColor3 = realColor
                                 ColorPickBox.BackgroundColor3 = Color3.fromHSV(cpH, 1, 1)
@@ -4081,9 +4082,6 @@ function WMacLib:Window(Settings)
                         if locked then return end
                         paletteOpen = not paletteOpen
                         CPWrap.Visible = paletteOpen
-                        TweenService:Create(colorpicker, TweenInfo.new(0.25, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
-                            Size = UDim2.new(1, 0, 0, paletteOpen and 260 or 38)
-                        }):Play()
                         if paletteOpen then
                             cpUpdate()
                         end
