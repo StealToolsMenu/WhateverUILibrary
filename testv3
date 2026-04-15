@@ -3626,7 +3626,7 @@ function WMacLib:Window(Settings)
 					return DropdownFunctions
 				end
 
-				                function SectionFunctions:Colorpicker(Settings, Flag)
+				function SectionFunctions:Colorpicker(Settings, Flag)
                     local ColorpickerFunctions = { Settings = Settings, IgnoreConfig = false, Class = "Colorpicker" }
                     local locked = false
 
@@ -3711,24 +3711,34 @@ function WMacLib:Window(Settings)
                     uICorner1.CornerRadius = UDim.new(0, 8)
                     uICorner1.Parent = colorCbg
 
+                    local previewStroke = Instance.new("UIStroke")
+                    previewStroke.Name = "PreviewStroke"
+                    previewStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+                    setThemed(previewStroke, "Color", "Outline")
+                    previewStroke.Transparency = 0.85
+                    previewStroke.Parent = colorCbg
+
                     colorCbg.Parent = colorpicker
 
                     local CPWrap = Instance.new("Frame")
                     CPWrap.Name = "DropdownPicker"
                     CPWrap.Size = UDim2.new(0, 175, 0, 212)
                     CPWrap.Position = UDim2.new(0.5, -87, 0, 46)
-                    CPWrap.BackgroundColor3 = Color3.fromRGB(14, 14, 22)
                     CPWrap.BorderSizePixel = 0
                     CPWrap.ZIndex = 3
                     CPWrap.Visible = false
                     CPWrap.Parent = colorpicker
+
+                    setThemed(CPWrap, "BackgroundColor3", "Background")
 
                     local cpWrapCorner = Instance.new("UICorner")
                     cpWrapCorner.CornerRadius = UDim.new(0, 6)
                     cpWrapCorner.Parent = CPWrap
 
                     local cpWrapStroke = Instance.new("UIStroke")
-                    cpWrapStroke.Color = Color3.fromRGB(60, 60, 80)
+                    cpWrapStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+                    setThemed(cpWrapStroke, "Color", "Outline")
+                    cpWrapStroke.Transparency = 0.9
                     cpWrapStroke.Parent = CPWrap
 
                     local ColorPickBox = Instance.new("ImageLabel")
@@ -3746,7 +3756,8 @@ function WMacLib:Window(Settings)
                     cpBoxCorner.Parent = ColorPickBox
 
                     local cpBoxStroke = Instance.new("UIStroke")
-                    cpBoxStroke.Color = Color3.fromRGB(29, 29, 29)
+                    setThemed(cpBoxStroke, "Color", "Outline")
+                    cpBoxStroke.Transparency = 0.85
                     cpBoxStroke.Parent = ColorPickBox
 
                     local MouseMovement = Instance.new("ImageLabel")
@@ -3759,6 +3770,12 @@ function WMacLib:Window(Settings)
                     MouseMovement.AnchorPoint = Vector2.new(0.5, 0.5)
                     MouseMovement.Image = "rbxassetid://4805639000"
                     MouseMovement.Parent = ColorPickBox
+
+                    local cursorStroke = Instance.new("UIStroke")
+                    cursorStroke.Color = Color3.fromRGB(255, 255, 255)
+                    cursorStroke.Transparency = 0.3
+                    cursorStroke.Thickness = 2
+                    cursorStroke.Parent = MouseMovement
 
                     local ColorRedGreenBlue = Instance.new("Frame")
                     ColorRedGreenBlue.Name = "HueBar"
@@ -3792,6 +3809,11 @@ function WMacLib:Window(Settings)
                     HueGradient.Rotation = 90
                     HueGradient.Parent = ColorRedGreenBlue
 
+                    local hueBarStroke = Instance.new("UIStroke")
+                    setThemed(hueBarStroke, "Color", "Outline")
+                    hueBarStroke.Transparency = 0.85
+                    hueBarStroke.Parent = ColorRedGreenBlue
+
                     local ColorRGBSlide = Instance.new("Frame")
                     ColorRGBSlide.Name = "Slider"
                     ColorRGBSlide.AnchorPoint = Vector2.new(0.5, 0)
@@ -3808,7 +3830,11 @@ function WMacLib:Window(Settings)
                     SlideLeft.Size = UDim2.new(0, 2, 1, 0)
                     SlideLeft.ZIndex = 11
                     SlideLeft.Parent = ColorRGBSlide
-                    Instance.new("UIStroke", SlideLeft)
+
+                    local slideLeftStroke = Instance.new("UIStroke")
+                    slideLeftStroke.Color = Color3.fromRGB(0, 0, 0)
+                    slideLeftStroke.Transparency = 0.5
+                    slideLeftStroke.Parent = SlideLeft
 
                     local SlideRight = Instance.new("Frame")
                     SlideRight.AnchorPoint = Vector2.new(1, 0)
@@ -3818,24 +3844,31 @@ function WMacLib:Window(Settings)
                     SlideRight.Size = UDim2.new(0, 2, 1, 0)
                     SlideRight.ZIndex = 11
                     SlideRight.Parent = ColorRGBSlide
-                    Instance.new("UIStroke", SlideRight)
+
+                    local slideRightStroke = Instance.new("UIStroke")
+                    slideRightStroke.Color = Color3.fromRGB(0, 0, 0)
+                    slideRightStroke.Transparency = 0.5
+                    slideRightStroke.Parent = SlideRight
 
                     local HexFrame = Instance.new("Frame")
                     HexFrame.Name = "HexFrame"
                     HexFrame.AnchorPoint = Vector2.new(0.5, 0)
-                    HexFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
                     HexFrame.BorderSizePixel = 0
                     HexFrame.Position = UDim2.new(0.5, 0, 0, 156)
                     HexFrame.Size = UDim2.new(1, -16, 0, 20)
                     HexFrame.ZIndex = 11
                     HexFrame.Parent = CPWrap
 
+                    setThemed(HexFrame, "BackgroundColor3", "Surface")
+                    HexFrame.BackgroundTransparency = 0.92
+
                     local hexFrameCorner = Instance.new("UICorner")
                     hexFrameCorner.CornerRadius = UDim.new(0, 4)
                     hexFrameCorner.Parent = HexFrame
 
                     local hexFrameStroke = Instance.new("UIStroke")
-                    hexFrameStroke.Color = Color3.fromRGB(60, 60, 80)
+                    setThemed(hexFrameStroke, "Color", "Outline")
+                    hexFrameStroke.Transparency = 0.9
                     hexFrameStroke.Parent = HexFrame
 
                     local HexLabel = Instance.new("TextLabel")
@@ -3848,8 +3881,9 @@ function WMacLib:Window(Settings)
                     HexLabel.ZIndex = 12
                     HexLabel.Font = Enum.Font.GothamBold
                     HexLabel.Text = "#" .. ColorpickerFunctions.Color:ToHex():upper()
-                    HexLabel.TextColor3 = Color3.fromRGB(200, 200, 230)
+                    setThemed(HexLabel, "TextColor3", "Text")
                     HexLabel.TextSize = 11
+                    HexLabel.TextTransparency = 0.2
                     HexLabel.TextXAlignment = Enum.TextXAlignment.Left
                     HexLabel.Parent = HexFrame
 
@@ -3857,10 +3891,12 @@ function WMacLib:Window(Settings)
                     RbRow.Name = "RainbowRow"
                     RbRow.Size = UDim2.new(1, -14, 0, 22)
                     RbRow.Position = UDim2.new(0, 7, 0, 182)
-                    RbRow.BackgroundColor3 = Color3.fromRGB(18, 18, 28)
                     RbRow.BorderSizePixel = 0
                     RbRow.ZIndex = 12
                     RbRow.Parent = CPWrap
+
+                    setThemed(RbRow, "BackgroundColor3", "Surface")
+                    RbRow.BackgroundTransparency = 0.95
 
                     local rbRowCorner = Instance.new("UICorner")
                     rbRowCorner.CornerRadius = UDim.new(0, 6)
@@ -3872,8 +3908,9 @@ function WMacLib:Window(Settings)
                     RbLbl.Size = UDim2.new(1, -70, 1, 0)
                     RbLbl.Position = UDim2.new(0, 8, 0, 0)
                     RbLbl.BackgroundTransparency = 1
-                    RbLbl.TextColor3 = Color3.fromRGB(150, 150, 190)
+                    setThemed(RbLbl, "TextColor3", "Placeholder")
                     RbLbl.TextSize = 10
+                    RbLbl.TextTransparency = 0.3
                     RbLbl.Font = Enum.Font.GothamBold
                     RbLbl.TextXAlignment = Enum.TextXAlignment.Left
                     RbLbl.ZIndex = 13
@@ -3883,11 +3920,13 @@ function WMacLib:Window(Settings)
                     RbToggleBg.Name = "ToggleBg"
                     RbToggleBg.Size = UDim2.new(0, 34, 0, 16)
                     RbToggleBg.Position = UDim2.new(1, -40, 0.5, -8)
-                    RbToggleBg.BackgroundColor3 = Color3.fromRGB(30, 30, 46)
                     RbToggleBg.BorderSizePixel = 0
                     RbToggleBg.ZIndex = 13
                     RbToggleBg.ClipsDescendants = true
                     RbToggleBg.Parent = RbRow
+
+                    setThemed(RbToggleBg, "BackgroundColor3", "Button")
+                    RbToggleBg.BackgroundTransparency = 0.5
 
                     local rbBgCorner = Instance.new("UICorner")
                     rbBgCorner.CornerRadius = UDim.new(1, 0)
@@ -3897,10 +3936,12 @@ function WMacLib:Window(Settings)
                     RbThumb.Name = "Thumb"
                     RbThumb.Size = UDim2.new(0, 14, 0, 14)
                     RbThumb.Position = UDim2.new(0, 3, 0.5, -7)
-                    RbThumb.BackgroundColor3 = Color3.fromRGB(180, 180, 210)
                     RbThumb.BorderSizePixel = 0
                     RbThumb.ZIndex = 14
                     RbThumb.Parent = RbToggleBg
+
+                    setThemed(RbThumb, "BackgroundColor3", "Icon")
+                    RbThumb.BackgroundTransparency = 0.2
 
                     local rbThumbCorner = Instance.new("UICorner")
                     rbThumbCorner.CornerRadius = UDim.new(1, 0)
@@ -3933,6 +3974,7 @@ function WMacLib:Window(Settings)
 
                         colorC.BackgroundColor3 = realColor
                         colorC.BackgroundTransparency = isAlpha and ColorpickerFunctions.Alpha or 0
+                        ColorpickerFunctions.Color = realColor
 
                         if ColorpickerFunctions.Settings.Callback then
                             task.spawn(function()
@@ -4006,11 +4048,11 @@ function WMacLib:Window(Settings)
                     local function setRainbow(on)
                         rainbowActive = on
                         TweenService:Create(RbToggleBg, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {
-                            BackgroundColor3 = on and Color3.fromRGB(75, 75, 210) or Color3.fromRGB(30, 30, 46)
+                            BackgroundTransparency = on and 0 or 0.5
                         }):Play()
                         TweenService:Create(RbThumb, TweenInfo.new(0.22, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
                             Position = on and UDim2.new(1, -16.1, 0.5, -7) or UDim2.new(0, 3, 0.5, -7),
-                            BackgroundColor3 = on and Color3.fromRGB(255, 255, 255) or Color3.fromRGB(180, 180, 210)
+                            BackgroundTransparency = on and 0 or 0.2
                         }):Play()
                         if on then
                             if rainbowConn then rainbowConn:Disconnect() end
@@ -4021,6 +4063,7 @@ function WMacLib:Window(Settings)
                                 ColorPickBox.BackgroundColor3 = Color3.fromHSV(cpH, 1, 1)
                                 ColorRGBSlide.Position = UDim2.new(0.5, 0, cpH, 0)
                                 HexLabel.Text = "#" .. realColor:ToHex():upper()
+                                ColorpickerFunctions.Color = realColor
                                 if ColorpickerFunctions.Settings.Callback then
                                     task.spawn(function()
                                         ColorpickerFunctions.Settings.Callback(realColor, isAlpha and ColorpickerFunctions.Alpha)
@@ -4041,6 +4084,9 @@ function WMacLib:Window(Settings)
                         TweenService:Create(colorpicker, TweenInfo.new(0.25, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
                             Size = UDim2.new(1, 0, 0, paletteOpen and 260 or 38)
                         }):Play()
+                        if paletteOpen then
+                            cpUpdate()
+                        end
                     end)
 
                     cpUpdate()
@@ -4077,11 +4123,6 @@ function WMacLib:Window(Settings)
                         cpH, cpS, cpV = Color3.toHSV(color3)
                         colorC.BackgroundColor3 = color3
                         cpUpdate()
-                        if ColorpickerFunctions.Settings.Callback then
-                            task.spawn(function()
-                                ColorpickerFunctions.Settings.Callback(color3, isAlpha and ColorpickerFunctions.Alpha)
-                            end)
-                        end
                     end
 
                     function ColorpickerFunctions:SetAlpha(alpha)
