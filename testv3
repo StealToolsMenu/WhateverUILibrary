@@ -1,4 +1,4 @@
-dont make it pop down make it show up as a popup lol and make the rainbow mode speed much much slower: local WMacLib = { 
+local WMacLib = { 
 	Options = {}, 
 	Folder = "Maclib", 
 	Themes = {},
