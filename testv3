@@ -3723,12 +3723,22 @@ function WMacLib:Window(Settings)
                     local CPWrap = Instance.new("Frame")
                     CPWrap.Name = "DropdownPicker"
                     CPWrap.Size = UDim2.new(0, 175, 0, 212)
-                    CPWrap.AnchorPoint = Vector2.new(0.5, 1)
-                    CPWrap.Position = UDim2.new(0.5, 0, 0, -5)
+                    CPWrap.AnchorPoint = Vector2.new(0.5, 0.5)
+                    CPWrap.Position = UDim2.fromScale(0.5, 0.5)
                     CPWrap.BorderSizePixel = 0
                     CPWrap.ZIndex = 50
                     CPWrap.Visible = false
+                    CPWrap.ClipsDescendants = false
                     CPWrap.Parent = colorpicker
+
+                    local CPBackdrop = Instance.new("Frame")
+                    CPBackdrop.Name = "CPBackdrop"
+                    CPBackdrop.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+                    CPBackdrop.BackgroundTransparency = 0.5
+                    CPBackdrop.BorderSizePixel = 0
+                    CPBackdrop.ZIndex = 49
+                    CPBackdrop.Visible = false
+                    CPBackdrop.Parent = colorpicker
 
                     setThemed(CPWrap, "BackgroundColor3", "Background")
 
@@ -4081,9 +4091,28 @@ function WMacLib:Window(Settings)
                     interact.MouseButton1Click:Connect(function()
                         if locked then return end
                         paletteOpen = not paletteOpen
-                        CPWrap.Visible = paletteOpen
+                        
+                        local scrollParent = section:FindFirstAncestorWhichIsA("ScrollingFrame")
                         if paletteOpen then
+                            if scrollParent then
+                                CPWrap.Parent = scrollParent
+                                CPBackdrop.Parent = scrollParent
+                                CPBackdrop.Size = UDim2.new(1, 0, 1, 0)
+                                CPBackdrop.Position = UDim2.new(0, 0, 0, 0)
+                            end
+                            CPWrap.Visible = true
+                            CPBackdrop.Visible = true
                             cpUpdate()
+                        else
+                            CPWrap.Visible = false
+                            CPBackdrop.Visible = false
+                            task.defer(function()
+                                if not paletteOpen then
+                                    CPWrap.Parent = colorpicker
+                                    CPBackdrop.Parent = colorpicker
+                                    CPBackdrop.Size = UDim2.new(1, 0, 0, 0)
+                                end
+                            end)
                         end
                     end)
 
