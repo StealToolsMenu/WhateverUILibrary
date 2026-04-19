@@ -1,4 +1,4 @@
-how can i change this color picker: local WMacLib = { 
+local WMacLib = { 
 	Options = {}, 
 	Folder = "Maclib", 
 	Themes = {},
