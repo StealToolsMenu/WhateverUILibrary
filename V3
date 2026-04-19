@@ -3677,14 +3677,14 @@ function WMacLib:Window(Settings)
 					colorCbg.Position = UDim2.fromScale(1, 0.5)
 					colorCbg.Size = UDim2.fromOffset(21, 21)
 
-					local colorC = Instance.new("Frame")
+				    local colorC = Instance.new("Frame")
 					colorC.Name = "Color"
 					colorC.AnchorPoint = Vector2.new(0.5, 0.5)
 					colorC.BackgroundColor3 = ColorpickerFunctions.Color
 					colorC.BorderSizePixel = 0
 					colorC.Position = UDim2.fromScale(0.5, 0.5)
 					colorC.Size = UDim2.fromScale(1, 1)
-					colorC.BackgroundTransparency = ColorpickerFunctions.Alpha or 0
+					colorC.BackgroundTransparency = isAlpha and ColorpickerFunctions.Alpha or 0
 
 					local uICorner = Instance.new("UICorner")
 					uICorner.Name = "UICorner"
