@@ -3627,7 +3627,8 @@ function WMacLib:Window(Settings)
 				end
 
 				function SectionFunctions:Colorpicker(Settings, Flag)
-                    local ColorpickerFunctions = { Settings = Settings, IgnoreConfig = false, Class = "Colorpicker" }
+
+					local ColorpickerFunctions = { Settings = Settings, IgnoreConfig = false, Class = "Colorpicker" }
 					local locked = false
 					local isAlpha = Settings.Alpha ~= nil
 
